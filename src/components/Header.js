@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Header() {
+  const [burgerStatus, setBurgerStatus] = useState(false);
+
   return (
     <Container>
       <a href="#">
@@ -19,10 +22,34 @@ function Header() {
       <RightMenu>
         <a href="#">Shop</a>
         <a href="#">Account</a>
-        <a href="#">Menu</a>
+        <a href="#" onClick={() => setBurgerStatus(true)}>
+          Menu
+        </a>
       </RightMenu>
 
-      <BurgerNav>
+      <BurgerNav show={burgerStatus}>
+        <CloseWrapper>
+          <CustomClose onClick={() => setBurgerStatus(false)} />
+        </CloseWrapper>
+
+        <li className="inactive">
+          <a href="#">Model S</a>
+        </li>
+        <li className="inactive">
+          <a href="#">Model 3</a>
+        </li>
+        <li className="inactive">
+          <a href="#">Model X</a>
+        </li>
+        <li className="inactive">
+          <a href="#">Model Y</a>
+        </li>
+        <li className="inactive">
+          <a href="#">Solar Roof</a>
+        </li>
+        <li className="inactive">
+          <a href="#">Solar Panels</a>
+        </li>
         <li>
           <a href="#">Existing Inventory</a>
         </li>
@@ -148,8 +175,34 @@ const BurgerNav = styled.div`
   display: flex;
   flex-direction: column;
   text-align: start;
-  li {
-    padding: 15px 0;
-    border-bottom: 1px solid rgba();
+  transform: ${(props) => (props.show ? "translateX(0)" : "translateX(100%)")};
+  transition: transform 0.2s ease-in;
+  overflow-y: scroll;
+
+  .inactive {
+    display: none;
   }
+
+  @media (max-width: 1200px) {
+    .inactive {
+      display: flex;
+    }
+  }
+
+  li {
+    padding: 11px 20px;
+  }
+
+  a {
+    font-weight: 600;
+  }
+`;
+
+const CustomClose = styled(CloseIcon)`
+  cursor: pointer;
+`;
+
+const CloseWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
